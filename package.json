@@ -1,0 +1,28 @@
+{
+  "name": "tre-demo-tree-select",
+  "version": "1.0.0",
+  "description": "demo for a treeview with primary and secondary selections",
+  "main": "index.js",
+  "dependencies": {
+    "mutant": "^3.22.1",
+    "ssb-revisions": "^1.0.0",
+    "tre-client": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tre"
+  ],
+  "author": "Jan Bölsche <jan@lagomorph.de> (https://regular.codes/)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regular/tre-demo-tree-select.git"
+  },
+  "bugs": {
+    "url": "https://github.com/regular/tre-demo-tree-select/issues"
+  },
+  "homepage": "https://github.com/regular/tre-demo-tree-select#readme"
+}
