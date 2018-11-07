@@ -1,15 +1,28 @@
 const {client} = require('tre-client')
 const Tree = require('tre-treeview-select')
+const Str = require('tre-string')
 const h = require('mutant/html-element')
+const Value = require('mutant/value')
+
+function parentHasClsass(el, cl) {
+  if (el.parentElement) {
+    if (el.parentElement.classList.contains(cl)) return true
+    return parentHasClsass(el.parentElement, cl)
+  }
+  return false
+}
 
 document.body.appendChild(h('style', `
+  span {
+    margin: .2em;
+  }
   li.children {
     list-style-type: none;
   }
-  span[id].selected {
+  span[data-key].selected {
     background-color: blue;
   }
-  span[id].secondary-selected {
+  span[data-key].secondary-selected {
     background-color: yellow;
   }
 `))
@@ -17,9 +30,39 @@ document.body.appendChild(h('style', `
 client( (err, ssb, config) => {
   console.log('tre config', config.tre)
   if (err) return console.error(err)
-  const renderTree = Tree(ssb, {
-    summary: kv => h('span', kv.value.content.name)
+
+  const renderString = Str({
+    canEdit: el => {
+      console.log('canEdit', el)
+      return parentHasClsass(el, 'selected')
+    },
+    save: (text, el) => {
+      const key = el.parentElement.getAttribute('data-key')
+      console.log('Saving', key, text)
+      ssb.revisions.patch(key, content => {
+        content.name = text
+        return content 
+      }, (err, result)=>{
+        if (err) return console.error(err)
+        console.log(result)
+      })
+    }
   })
+  
+  const sel = Value()
+
+  const renderTree = Tree(ssb, {
+    primarySelection: sel,
+    summary: kv => [h('span', kv.value.content.type), renderString(kv.value.content.name)]
+  })
+
+  document.body.appendChild(
+    h('div', [
+      h('span', 'selection'),
+      h('span', sel)
+    ])
+  )
+
   document.body.appendChild(
     h('ul',
       renderTree({

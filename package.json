@@ -6,7 +6,9 @@
   "dependencies": {
     "mutant": "^3.22.1",
     "ssb-revisions": "^1.0.0",
-    "tre-client": "^1.0.0"
+    "tre-client": "^1.0.0",
+    "tre-string": "^1.0.0",
+    "tre-treeview-select": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
